@@ -19,7 +19,7 @@ const RegistrationForm = ({ publishableCourses }) => {
   const registerStudent = (course) => {
     const studentName = prompt('Enter student name:');
     if (studentName) {
-      setRegistrations([...registrations, { course: course.name, studentName }]);
+      setRegistrations([...registrations, { course: course.name, type: course.type, studentName }]);
     }
   };
 
@@ -41,7 +41,7 @@ const RegistrationForm = ({ publishableCourses }) => {
       <ul>
         {filteredCourses.map((course, index) => (
           <li key={index}>
-            {course.name}{' '}
+            {course.name} - {course.type} {/* Display the course type at the end */}
             <button onClick={() => registerStudent(course)}>Register</button>
           </li>
         ))}
@@ -52,7 +52,7 @@ const RegistrationForm = ({ publishableCourses }) => {
       <ul>
         {registrations.map((reg, index) => (
           <li key={index}>
-            {reg.studentName} registered for {reg.course}
+            {reg.studentName} registered for {reg.course} ({reg.type}) {/* Display course type */}
           </li>
         ))}
       </ul>
