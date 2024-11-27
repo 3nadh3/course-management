@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 import '../css/CourseForm.css';
 
-const CourseForm = () => {
-  const [courses, setCourses] = useState([]);
-  const [courseTypes] = useState(['Individual', 'Group', 'Special']);
-  const [publishableCourses, setPublishableCourses] = useState([]);
+const CourseForm = ({ courseTypes, setPublishableCourses }) => {
   const [courseInput, setCourseInput] = useState('');
   const [selectedType, setSelectedType] = useState('');
 
-  const addCourse = () => {
-    if (courseInput.trim()) {
-      setCourses([...courses, courseInput]);
-      setCourseInput('');
-    }
-  };
-
   const addPublishableCourse = () => {
     if (selectedType && courseInput) {
-      const combinedCourse = `${selectedType}, ${courseInput}`;
-      setPublishableCourses([...publishableCourses, combinedCourse]);
+      const newCourse = { type: selectedType, name: courseInput };
+      setPublishableCourses((prevCourses) => [...prevCourses, newCourse]);
+      setCourseInput('');
     }
   };
 
@@ -32,10 +23,13 @@ const CourseForm = () => {
           value={courseInput}
           onChange={(e) => setCourseInput(e.target.value)}
         />
-        <button onClick={addCourse}>Add</button>
+        <button onClick={addPublishableCourse}>Add</button>
       </div>
-      <h3>Publishable Courses</h3>
-      <select onChange={(e) => setSelectedType(e.target.value)}>
+      <h3>Select Course Type</h3>
+      <select
+        onChange={(e) => setSelectedType(e.target.value)}
+        value={selectedType}
+      >
         <option value="">Select Type</option>
         {courseTypes.map((type, index) => (
           <option key={index} value={type}>
@@ -43,12 +37,6 @@ const CourseForm = () => {
           </option>
         ))}
       </select>
-      <button onClick={addPublishableCourse}>Combine</button>
-      <ul>
-        {publishableCourses.map((course, index) => (
-          <li key={index}>{course}</li>
-        ))}
-      </ul>
     </div>
   );
 };

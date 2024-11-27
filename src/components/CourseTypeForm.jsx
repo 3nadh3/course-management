@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import '../css/CourseTypeForm.css';
 
-const CourseTypeForm = () => {
-  const [courseTypes, setCourseTypes] = useState([]);
+const CourseTypeForm = ({ courseTypes, setCourseTypes }) => {
   const [input, setInput] = useState('');
 
   const addCourseType = () => {
@@ -40,15 +39,19 @@ const CourseTypeForm = () => {
         <button onClick={addCourseType}>Add</button>
       </div>
       <ul>
-        {courseTypes.map((type, index) => (
-          <li key={index}>
-            {type}
-            <div>
-              <button onClick={() => editCourseType(index)}>Edit</button>
-              <button onClick={() => deleteCourseType(index)}>Delete</button>
-            </div>
-          </li>
-        ))}
+        {courseTypes.length === 0 ? (
+          <li>No course types added yet.</li>
+        ) : (
+          courseTypes.map((type, index) => (
+            <li key={index}>
+              {type}
+              <div>
+                <button onClick={() => editCourseType(index)}>Edit</button>
+                <button onClick={() => deleteCourseType(index)}>Delete</button>
+              </div>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );
