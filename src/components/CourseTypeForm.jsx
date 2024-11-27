@@ -1,57 +1,31 @@
 import React, { useState } from 'react';
-import '../css/CourseTypeForm.css';
 
 const CourseTypeForm = ({ courseTypes, setCourseTypes }) => {
-  const [input, setInput] = useState('');
+  const [newCourseType, setNewCourseType] = useState('');
 
-  const addCourseType = () => {
-    if (input.trim()) {
-      setCourseTypes([...courseTypes, input]);
-      setInput('');
-    }
-  };
-
-  const deleteCourseType = (index) => {
-    const updatedTypes = courseTypes.filter((_, i) => i !== index);
-    setCourseTypes(updatedTypes);
-  };
-
-  const editCourseType = (index) => {
-    const newName = prompt('Edit Course Type:', courseTypes[index]);
-    if (newName) {
-      const updatedTypes = courseTypes.map((type, i) =>
-        i === index ? newName : type
-      );
-      setCourseTypes(updatedTypes);
+  const handleAddCourseType = () => {
+    if (newCourseType && !courseTypes.includes(newCourseType)) {
+      setCourseTypes([...courseTypes, newCourseType]);
+      setNewCourseType('');
     }
   };
 
   return (
-    <div className="container">
-      <h2>Course Types</h2>
-      <div className="input-group">
-        <input
-          type="text"
-          placeholder="Add Course Type"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button onClick={addCourseType}>Add</button>
-      </div>
+    <div>
+      <h2>Add Course Type</h2>
+      <input
+        type="text"
+        value={newCourseType}
+        onChange={(e) => setNewCourseType(e.target.value)}
+        placeholder="Enter course type (e.g., Individual, Group)"
+      />
+      <button onClick={handleAddCourseType}>Add</button>
+
+      <h3>Available Course Types</h3>
       <ul>
-        {courseTypes.length === 0 ? (
-          <li>No course types added yet.</li>
-        ) : (
-          courseTypes.map((type, index) => (
-            <li key={index}>
-              {type}
-              <div>
-                <button onClick={() => editCourseType(index)}>Edit</button>
-                <button onClick={() => deleteCourseType(index)}>Delete</button>
-              </div>
-            </li>
-          ))
-        )}
+        {courseTypes.map((type, index) => (
+          <li key={index}>{type}</li>
+        ))}
       </ul>
     </div>
   );

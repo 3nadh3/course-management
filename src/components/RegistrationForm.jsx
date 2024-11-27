@@ -5,7 +5,7 @@ const RegistrationForm = ({ publishableCourses }) => {
   const [filterType, setFilterType] = useState('');
   const [courseTypes, setCourseTypes] = useState([]);
 
-  // Extract unique course types from the courses
+  // Extract unique course types from the publishable courses
   useEffect(() => {
     const types = [...new Set(publishableCourses.map(course => course.type))];
     setCourseTypes(types);
@@ -13,9 +13,10 @@ const RegistrationForm = ({ publishableCourses }) => {
 
   // Filter the courses based on the selected filter type
   const filteredCourses = filterType
-    ? publishableCourses.filter((course) => course.type === filterType)
-    : publishableCourses;
+    ? publishableCourses.filter(course => course.type === filterType)
+    : publishableCourses; // If no filter is selected, show all courses
 
+  // Handle student registration
   const registerStudent = (course) => {
     const studentName = prompt('Enter student name:');
     if (studentName) {
@@ -41,7 +42,7 @@ const RegistrationForm = ({ publishableCourses }) => {
       <ul>
         {filteredCourses.map((course, index) => (
           <li key={index}>
-            {course.name} - {course.type} {/* Display the course type at the end */}
+            {course.name} - {course.type}
             <button onClick={() => registerStudent(course)}>Register</button>
           </li>
         ))}
@@ -52,7 +53,7 @@ const RegistrationForm = ({ publishableCourses }) => {
       <ul>
         {registrations.map((reg, index) => (
           <li key={index}>
-            {reg.studentName} registered for {reg.course} ({reg.type}) {/* Display course type */}
+            {reg.studentName} registered for {reg.course} ({reg.type})
           </li>
         ))}
       </ul>
