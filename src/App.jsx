@@ -18,8 +18,12 @@ const App = () => {
     ]);
   }, []);
 
-  const createPublishableCourse = (course) => {
-    setPublishableCourses([...publishableCourses, course]);
+  // Correctly using the callback form of setState to ensure we have the latest state
+  const createPublishableCourse = (type, course) => {
+    setPublishableCourses((prevCourses) => [
+      ...prevCourses,
+      { name: course, type }
+    ]);
   };
 
   return (
@@ -30,7 +34,7 @@ const App = () => {
           <ul>
             <li><Link to="/">Course Types</Link></li>
             <li><Link to="/courses">Courses</Link></li>
-            <li><Link to="/publishable-courses">publishable-courses</Link></li>
+            <li><Link to="/publishable-courses">Publishable Courses</Link></li>
             <li><Link to="/registration">Registration</Link></li>
           </ul>
         </nav>

@@ -39,8 +39,9 @@ const PublishableCourseForm = ({ courseTypes, courses, createPublishableCourse, 
       <h3>Publishable Courses</h3>
       <ul>
         {publishableCourses.map((course, index) => (
-          <li key={index}>      {course.name} - {course.type}
-</li>
+          <li key={index}>
+            {course.name} - {course.type}
+          </li>
         ))}
       </ul>
     </div>
